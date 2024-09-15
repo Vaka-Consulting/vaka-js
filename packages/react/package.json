@@ -1,0 +1,41 @@
+{
+  "name": "@vaka-tech/react",
+  "version": "0.0.1",
+  "description": "React components, context & providers and hooks for usage in Web 3 apps.",
+  "author": "Senny Kalidien <senny@vaka.consulting>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vaka-Consulting/vaka-js.git"
+  },
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@hookform/resolvers": "^3.9.0",
+    "@meshsdk/core": "1.5.25",
+    "@meshsdk/react": "1.1.12",
+    "@mui/icons-material": "^5.16.6",
+    "@mui/lab": "^5.0.0-alpha.173",
+    "@mui/material": "^5.16.6",
+    "js-cookie": "^3.0.1",
+    "mui-one-time-password-input": "^2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "react-use-wizard": "^2.3.0",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vaka-tech/babel-config-base": "^0.0.1",
+    "@vaka-tech/common": "^0.0.1",
+    "@vaka-tech/jest-config-base": "^0.0.1",
+    "@vaka-tech/web3-auth": "^0.0.1",
+    "babel-plugin-direct-import": "^1.0.0"
+  },
+  "gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"
+}

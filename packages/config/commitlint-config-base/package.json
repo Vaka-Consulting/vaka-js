@@ -1,0 +1,17 @@
+{
+	"name": "@vaka-tech/commitlint-config-base",
+	"version": "0.0.1",
+	"description": "Shared Commitlint configuration.",
+	"author": "Senny Kalidien <senny@vaka.consulting>",
+	"license": "UNLICENSED",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Vaka-Consulting/vaka-js.git"
+	},
+	"main": "index.js",
+	"devDependencies": {
+		"@commitlint/cli": "^16.2.4",
+		"@commitlint/config-conventional": "^16.2.4"
+	},
+	"gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"
+}
