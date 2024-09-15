@@ -1,6 +1,6 @@
 {
 	"name": "@vaka-tech/commitlint-config-base",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Shared Commitlint configuration.",
 	"author": "Senny Kalidien <senny@vaka.consulting>",
 	"license": "UNLICENSED",

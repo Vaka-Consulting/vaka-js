@@ -1,6 +1,6 @@
 {
   "name": "@vaka-tech/react",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "React components, context & providers and hooks for usage in Web 3 apps.",
   "author": "Senny Kalidien <senny@vaka.consulting>",
   "license": "UNLICENSED",
@@ -31,10 +31,10 @@
     "@types/js-cookie": "^3.0.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vaka-tech/babel-config-base": "^0.0.1",
-    "@vaka-tech/common": "^0.0.1",
-    "@vaka-tech/jest-config-base": "^0.0.1",
-    "@vaka-tech/web3-auth": "^0.0.1",
+    "@vaka-tech/babel-config-base": "^1.0.0",
+    "@vaka-tech/common": "^1.0.0",
+    "@vaka-tech/jest-config-base": "^1.0.0",
+    "@vaka-tech/web3-auth": "^1.0.0",
     "babel-plugin-direct-import": "^1.0.0"
   },
   "gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"

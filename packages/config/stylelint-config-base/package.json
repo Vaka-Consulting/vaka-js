@@ -1,6 +1,6 @@
 {
 	"name": "@vaka-tech/stylelint-config-base",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Shared Stylelint configuration for usage across our apps.",
 	"author": "Senny Kalidien <senny@vaka.consulting>",
 	"license": "UNLICENSED",
