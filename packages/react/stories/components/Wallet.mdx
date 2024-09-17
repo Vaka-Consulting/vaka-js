@@ -1,0 +1,87 @@
+import { Canvas, Meta } from '@storybook/blocks'
+
+import * as WalletStories from './Wallet.stories'
+
+<Meta of={WalletStories} title="Components/Wallet" />
+
+# Wallet
+
+<br />
+
+## Context & Hooks
+
+These components only work when used with the following context/providers in `@vaka-tech/react` package:
+
+### Context
+
+Required context that should be wrapped around the components:
+
+- `WalletProvider` - context/wallet.ts
+- `WalletExtendedProvider` context/wallet.ts
+
+```
+import { WalletProvider, WalletExtendedProvider } from '@vaka-tech/react'
+
+<WalletProvider>
+  <WalletExtendedProvider // Does not work if not wrapped in WalletProvider
+    projectPrefix={'storybook'}
+    projectTokenPolicyId={'171163f05e4f30b6be3c22668c37978e7d508b84f83558e523133cdf'}
+    projectAssetsPolicyIds={[]}
+    persistConnection={true}
+  >
+    <WalletConnector />
+  <WalletExtendedProvider>
+</WalletProvider>
+```
+
+### Hooks
+
+Only works within the context of the `WalletProvider` or `WalletExtendedProvider` and are used by the components:
+
+- `useWallet()` - hooks/wallet.ts
+- `useExtendedWallet()` - hooks/wallet.ts
+
+```
+import { useWallet, useExtendedWallet } from '@vaka-tech/react'
+
+function MyComponent() {
+  const { connect, disconnect, isConnected, isConnecting, wallet } = useWallet()
+  const { projectToken, projectAssets } = useExtendedWallet()
+}
+```
+
+## WalletConnector
+
+WalletConnector with a connected / connecting / disconnected state.
+
+- Disconnected: Shows a text to promp user to connect wallet.
+  - When clicked on, it displays connectivity options (with the [WalletPicker](#walletpicker) component).
+- Connecting: displays a disabled button with connecting message.
+- Connected: displays `ADA` OR `Custom Project Token` balance (with the [WalletBalance](#walletbalance) component).
+  - When clicked on, the option to disconnect will show (with the [Disconnect](#walletdisconnect) component).
+
+<Canvas of={WalletStories.WalletConnector} />
+
+## WalletPicker
+
+Displays connectivity options based on a list of installed dApp wallet extensions found in the users browser
+
+<Canvas of={WalletStories.WalletPicker} />
+
+## WalletAddress
+
+Displays the wallet address (truncated in the middle) of the connected wallet with an option to copy the address.
+
+<Canvas of={WalletStories.WalletAddress} />
+
+## WalletBalance
+
+Displays the `ADA` OR `Custom Project Token` balance of the connected wallet.
+
+<Canvas of={WalletStories.WalletBalance} />
+
+## WalletDisconnect
+
+Simply disconnects the connected wallet.
+
+<Canvas of={WalletStories.WalletDisconnectButton} />

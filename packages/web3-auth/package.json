@@ -1,0 +1,17 @@
+{
+  "name": "@vaka-tech/web3-auth",
+  "version": "1.0.0",
+  "description": "Authenticates Web2 (email) and Web3 (dApp wallet) users.",
+  "author": "Senny Kalidien <senny@vaka.consulting>",
+  "license": "UNLICENSED",
+  "repository": "https://github.com/vaka-consultancy/vaka-js",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@vaka-tech/common": "^1.0.0",
+    "axios": "^1.7.4"
+  },
+  "gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"
+}

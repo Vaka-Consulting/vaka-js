@@ -1,0 +1,19 @@
+{
+  "name": "@vaka-tech/babel-config-base",
+  "version": "1.0.0",
+  "description": "Shared Babel configuration",
+  "author": "Senny Kalidien <senny@vaka.consulting>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vaka-Consulting/vaka-js.git"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "@babel/preset-typescript": "^7.16.0"
+  },
+  "gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"
+}
