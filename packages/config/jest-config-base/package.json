@@ -1,0 +1,19 @@
+{
+  "name": "@vaka-tech/jest-config-base",
+  "version": "1.0.0",
+  "description": "Shared Jest configuration.",
+  "author": "Senny Kalidien <senny@vaka.consulting>",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.4.0",
+    "babel-jest": "^29.4.1",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "jsdom": "^19.0.0",
+    "react-test-renderer": "^18.2.0"
+  },
+  "gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"
+}

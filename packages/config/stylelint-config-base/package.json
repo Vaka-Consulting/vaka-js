@@ -1,0 +1,17 @@
+{
+	"name": "@vaka-tech/stylelint-config-base",
+	"version": "1.0.0",
+	"description": "Shared Stylelint configuration for usage across our apps.",
+	"author": "Senny Kalidien <senny@vaka.consulting>",
+	"license": "UNLICENSED",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Vaka-Consulting/vaka-js.git"
+	},
+	"main": "index.js",
+	"devDependencies": {
+		"stylelint": "^14.8.1",
+		"stylelint-prettier": "^2.0.0"
+	},
+	"gitHead": "8428fcaefb3bb3c17a1e006de3104140657113ad"
+}

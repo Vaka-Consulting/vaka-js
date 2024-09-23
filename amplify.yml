@@ -1,0 +1,28 @@
+version: 1
+applications:
+  - appRoot: applications/web3-auth-demo
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - echo "Using buildsteps from codebase Empowa Explorer"
+            - ssm_env_type=$(if [[ "$STAGE" = "production" && "$AWS_BRANCH" = "main" ]]; then echo "production"; else echo "dev"; fi)
+            - export STAGE=$ssm_env_type
+            # APP
+            - export NEXT_PUBLIC_ENV=$(if [[ "$STAGE" = "production" && "$AWS_BRANCH" = "main" ]]; then echo "production"; else echo "development"; fi)
+            - export NEXT_PUBLIC_WEB3_AUTH_ENDPOINT=https://trpnv17hgf.execute-api.us-east-1.amazonaws.com/
+            - echo "Building with $STAGE on environment of $NEXT_PUBLIC_ENV"
+
+        build:
+          commands:
+            - yarn install --update-checksums
+            - yarn build
+      artifacts:
+        baseDirectory: 'out'
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - '/root/.npm/**/*'
+          - '/root/.nvm/**/*'
+          - '.next/cache'

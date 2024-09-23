@@ -1,0 +1,70 @@
+{
+  "name": "vaka-js",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VakaJs contains packages to help build applications that can interact with the Cardano Blockchain.",
+  "author": {
+    "name": "Senny Kalidien",
+    "email": "senny@vaka.consulting"
+  },
+  "homepage": "https://github.com/vaka-consulting/vaka-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Vaka-Consulting/vaka-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vaka-Consulting/vaka-js/issues"
+  },
+  "engines": {
+    "node": ">=18.17.x"
+  },
+  "workspaces": [
+    "applications/*",
+    "packages/*",
+    "packages/*/**"
+  ],
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "scripts": {
+    "dev": "storybook dev -p 6006 --no-open",
+    "build": "yarn build-storybook",
+    "deploy": "yarn chromatic",
+    "chromatic": "npx chromatic --auto-accept-changes",
+    "build-storybook": "storybook build",
+    "prepare": "husky install",
+    "pre-commit": "yarn lint-staged",
+    "lint": "eslint --fix",
+    "clean": "npx rimraf --glob ./**/node_modules"
+  },
+  "dependencies": {
+    "@storybook/addon-essentials": "^8.3.2",
+    "@storybook/addon-links": "^8.3.2",
+    "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
+    "@storybook/blocks": "^8.3.2",
+    "@storybook/react": "^8.3.2",
+    "@storybook/react-webpack5": "^8.3.2",
+    "buffer": "^6.0.3",
+    "chromatic": "^11.7.1",
+    "msw": "^2.3.5",
+    "msw-storybook-addon": "^2.0.3",
+    "path": "^0.12.7",
+    "storybook": "^8.3.2",
+    "stream": "^0.0.3",
+    "webpack": "^5.93.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.5",
+    "@vaka-tech/commitlint-config-base": "^1.0.0",
+    "@vaka-tech/eslint-config-base": "^1.0.0",
+    "@vaka-tech/prettier-config-base": "^1.0.0",
+    "husky": "^8.0.0",
+    "lerna": "^8.1.8",
+    "lint-staged": "^13.0.1"
+  }
+}
