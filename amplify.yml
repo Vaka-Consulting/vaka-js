@@ -5,7 +5,7 @@ applications:
       phases:
         preBuild:
           commands:
-            - echo "Using buildsteps from codebase [web3-auth-demo]"
+            - echo "Using buildsteps from codebase [web3-auth-demo] "
             - ssm_env_type=$(if [[ "$STAGE" = "production" && "$AWS_BRANCH" = "main" ]]; then echo "production"; else echo "dev"; fi)
             - export STAGE=$ssm_env_type
             # APP
