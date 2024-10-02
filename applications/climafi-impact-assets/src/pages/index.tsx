@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Web3 Auth on Cardano Demo</title>
+        <title>Climafi Impact Assets</title>
         <meta name="description" content="A Cardano dApp powered by VakaJs" />
       </Head>
       <Layout>
