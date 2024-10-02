@@ -81,11 +81,19 @@ export function Header() {
             color: 'inherit',
             textDecoration: 'none',
             display: 'inline-flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
           }}
         >
           <Image src="/logo.png" width={150} height={32} alt="Picture of the author" />
-          <Typography variant="body1" component="div" sx={{ ml: 2 }}>
+          <Typography
+            variant="h4"
+            fontSize={33}
+            component="span"
+            fontWeight={500}
+            lineHeight={1}
+            ml={1}
+            sx={{ position: 'relative', top: '1px' }}
+          >
             Impact Assets
           </Typography>
         </NextLinkComposed>
