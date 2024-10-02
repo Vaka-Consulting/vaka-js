@@ -1,0 +1,7 @@
+body {
+  background-image: url("/bg-pattern.jpg");
+  background-size: cover !important;
+  background-position: top !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed;
+}
