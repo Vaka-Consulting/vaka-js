@@ -8,16 +8,13 @@ import ExperienceLevelStep from './_internal/ExperienceLevelStep'
 import WalletMethodStep from './_internal/WalletMethodStep'
 import WalletSignatureStep from './_internal/WalletSignatureStep'
 import { getFirstStep } from './utils'
-import { AuthRegisterType } from '../../../types'
+import { useAuthRegister } from '../../../hooks'
 
-type Type = AuthRegisterType
+function AuthRegister() {
+  const { config } = useAuthRegister()
+  const { survey } = config
 
-interface Props {
-  type?: Type
-}
-
-function AuthRegister({ type }: Props) {
-  const firstStep = getFirstStep(type)
+  const firstStep = getFirstStep(survey)
 
   return (
     <Wizard startIndex={firstStep}>

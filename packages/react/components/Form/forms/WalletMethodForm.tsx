@@ -17,6 +17,11 @@ interface FormSubmitData {
   walletMethod: WalletMethod
 }
 
+interface WalletMethodFormProps extends FormProps<FormSubmitData> {
+  canCreateWallet: boolean
+  canConnectWallet: boolean
+}
+
 const validationSchema: ObjectSchema<FormSubmitData> = object().shape({
   stakeAddress: string(),
   walletAddress: string().when('walletMethod', {
@@ -28,7 +33,7 @@ const validationSchema: ObjectSchema<FormSubmitData> = object().shape({
 
 const defaultValues = validationSchema.getDefault()
 
-function WalletMethodForm({ onPrevious, onSubmit }: FormProps<FormSubmitData>) {
+function WalletMethodForm({ canCreateWallet, canConnectWallet, onPrevious, onSubmit }: WalletMethodFormProps) {
   const {
     control,
     handleSubmit,
@@ -99,13 +104,15 @@ function WalletMethodForm({ onPrevious, onSubmit }: FormProps<FormSubmitData>) {
           </Typography>
         </Box>
 
-        <Box mb={3}>
-          <WalletConnector
-            disabled={[WalletMethod.Supplied, WalletMethod.Created].some((method) =>
-              method.includes(watch('walletMethod')),
-            )}
-          />
-        </Box>
+        {canConnectWallet && (
+          <Box mb={3}>
+            <WalletConnector
+              disabled={[WalletMethod.Supplied, WalletMethod.Created].some((method) =>
+                method.includes(watch('walletMethod')),
+              )}
+            />
+          </Box>
+        )}
 
         <Controller
           name="walletAddress"
@@ -130,30 +137,32 @@ function WalletMethodForm({ onPrevious, onSubmit }: FormProps<FormSubmitData>) {
           )}
         />
 
-        <Controller
-          name="walletMethod"
-          control={control}
-          render={({ field }) => (
-            <FormControl sx={{ display: 'flex', mb: 2 }}>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      {...field}
-                      value={WalletMethod.Created}
-                      onChange={(event, checked) => {
-                        const value = checked ? event.target.value : defaultValues.walletMethod
-                        field.onChange(value)
-                      }}
-                    />
-                  }
-                  label="I want to create a new wallet"
-                  disabled={!!watch('walletAddress')}
-                />
-              </FormGroup>
-            </FormControl>
-          )}
-        />
+        {canCreateWallet && (
+          <Controller
+            name="walletMethod"
+            control={control}
+            render={({ field }) => (
+              <FormControl sx={{ display: 'flex', mb: 2 }}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        {...field}
+                        value={WalletMethod.Created}
+                        onChange={(event, checked) => {
+                          const value = checked ? event.target.value : defaultValues.walletMethod
+                          field.onChange(value)
+                        }}
+                      />
+                    }
+                    label="I want to create a new wallet"
+                    disabled={!!watch('walletAddress')}
+                  />
+                </FormGroup>
+              </FormControl>
+            )}
+          />
+        )}
       </Box>
 
       {Object.keys(errors).length > 0 && <FormErrorNotification errors={errors} />}

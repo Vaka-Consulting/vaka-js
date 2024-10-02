@@ -9,7 +9,7 @@ export const roboto = Roboto({
 })
 
 // Create a theme instance.
-const theme = createTheme({
+const globalTheme = createTheme({
   palette: {
     common: {
       black: '#1c1c1c',
@@ -20,6 +20,7 @@ const theme = createTheme({
     },
     secondary: {
       main: '#f9f5e8',
+      light: '#fcfaf3',
     },
     error: {
       main: red.A400,
@@ -28,6 +29,20 @@ const theme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
+})
+
+const theme = createTheme(globalTheme, {
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: globalTheme.palette.secondary.light,
+          color: globalTheme.palette.common.black,
+        },
+      },
+    },
+  },
+  globalTheme,
 })
 
 export default theme

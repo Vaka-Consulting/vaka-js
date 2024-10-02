@@ -15,6 +15,7 @@ import {
   AuthRegisterState,
   AuthState,
 } from '../context'
+import { AuthRegisterConfig } from '../types'
 
 interface Auth extends AuthState {
   requestOtp: (data: AuthRequestWithOtp) => Promise<void>
@@ -25,6 +26,7 @@ interface Auth extends AuthState {
 }
 
 interface AuthRegister extends AuthRegisterState {
+  config: AuthRegisterConfig
   register: (data: Partial<AuthRegisterData>) => Promise<void>
   verifyOtp: (data: AuthWithOtp) => Promise<void>
   storeData: (data: Partial<AuthRegisterCollectedData>) => void
@@ -128,7 +130,7 @@ function useAuth(): Auth {
 }
 
 const useAuthRegister = (): AuthRegister => {
-  const { state, dispatch, provider } = useContext(AuthRegisterContext)
+  const { state, dispatch, provider, config } = useContext(AuthRegisterContext)
 
   const register = async (data: Partial<AuthRegisterData>) => {
     try {
@@ -172,6 +174,7 @@ const useAuthRegister = (): AuthRegister => {
 
   return {
     ...state,
+    config,
     register,
     verifyOtp,
     storeData: storeData,

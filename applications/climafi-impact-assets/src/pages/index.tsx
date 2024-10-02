@@ -8,9 +8,6 @@ import Typography from '@mui/material/Typography'
 function NotAuthenticated() {
   return (
     <>
-      <Typography component="h1" variant={'h4'} mb={0}>
-        Home
-      </Typography>
       <Typography>Please login to access the content</Typography>
     </>
   )
@@ -19,9 +16,6 @@ function NotAuthenticated() {
 function Authenticated() {
   return (
     <>
-      <Typography component="h1" variant={'h4'} mb={0}>
-        Home
-      </Typography>
       <Typography mb={2}>You are logged in</Typography>
     </>
   )
@@ -37,7 +31,12 @@ export default function Home() {
         <meta name="description" content="A Cardano dApp powered by VakaJs" />
       </Head>
       <Layout>
-        <Container>{authenticated ? <Authenticated /> : <NotAuthenticated />}</Container>
+        <Container>
+          <Typography component="h1" variant={'h4'} mb={0}>
+            Dashboard
+          </Typography>
+          {authenticated ? <Authenticated /> : <NotAuthenticated />}
+        </Container>
       </Layout>
     </>
   )

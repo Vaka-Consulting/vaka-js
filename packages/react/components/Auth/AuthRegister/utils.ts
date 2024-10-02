@@ -1,6 +1,5 @@
 import { AuthRegisterStep } from './types'
 import { ExperienceLevel } from '../../../../common'
-import { AuthRegisterType } from '../../../types'
 
 const inexperiencedLevels = [ExperienceLevel.Newbie]
 const experiencedLevels = [ExperienceLevel.Beginner, ExperienceLevel.Confident, ExperienceLevel.Expert]
@@ -13,13 +12,10 @@ export const getIsExperienced = (experienceLevel: ExperienceLevel) => {
   return experiencedLevels.some((el) => el.includes(experienceLevel))
 }
 
-export const getFirstStep = (type: AuthRegisterType | undefined) => {
-  switch (type) {
-    case AuthRegisterType.Survey:
-      return AuthRegisterStep.ExperienceLevel
-    case AuthRegisterType.Wallet:
-      return AuthRegisterStep.WalletMethod
-    default:
-      return AuthRegisterStep.WalletMethod
+export const getFirstStep = (survey: boolean) => {
+  if (survey) {
+    return AuthRegisterStep.ExperienceLevel
+  } else {
+    return AuthRegisterStep.WalletMethod
   }
 }

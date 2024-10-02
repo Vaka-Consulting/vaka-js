@@ -72,7 +72,7 @@ export function Header() {
   const { authenticated } = useAuth()
 
   return (
-    <AppBar color="secondary" position="static">
+    <AppBar position="static">
       <Toolbar>
         <NextLinkComposed
           to={'/'}

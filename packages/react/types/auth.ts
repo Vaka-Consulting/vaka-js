@@ -3,12 +3,8 @@ export enum AuthRegisterType {
   Survey = 'SURVEY',
 }
 
-export enum AuthRegisterStep {
-  Start = 'START',
-  Beginner = 'BEGINNER',
-  Experienced = 'EXPERIENCED',
-  Email = 'EMAIL',
-  WalletSignature = 'WALLET_SIGNATURE',
-  CreateWallet = 'CREATE_WALLET',
-  Success = 'SUCCESS',
+export interface AuthRegisterConfig {
+  survey: boolean
+  connectWallet: boolean
+  createWallet: boolean
 }

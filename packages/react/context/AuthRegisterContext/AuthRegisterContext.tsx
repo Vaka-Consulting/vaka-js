@@ -1,6 +1,7 @@
 import React, { createContext, Dispatch, useReducer } from 'react'
 import { AuthRegisterCollectedData } from '@vaka-tech/common'
 import type { Web3AuthProvider } from '@vaka-tech/web3-auth'
+import { AuthRegisterConfig } from '../../types'
 
 interface AuthRegisterState {
   registered: boolean
@@ -25,11 +26,12 @@ interface AuthRegisterDispatchAction {
 }
 
 interface AuthRegisterContextProviderProps {
+  config?: AuthRegisterConfig
   children: React.ReactNode
   provider: Web3AuthProvider
 }
 
-const defaultState = {
+const DEFAULT_STATE: AuthRegisterState = {
   registering: false,
   registered: false,
   error: undefined,
@@ -43,6 +45,12 @@ const defaultState = {
   },
 }
 
+const DEFAULT_CONFIG: AuthRegisterConfig = {
+  survey: false,
+  connectWallet: true,
+  createWallet: true,
+}
+
 const reducer = (state: AuthRegisterState, action: AuthRegisterDispatchAction) => {
   switch (action.type) {
     case AuthRegisterDispatchActionType.StoreData:
@@ -53,10 +61,10 @@ const reducer = (state: AuthRegisterState, action: AuthRegisterDispatchAction) =
     case AuthRegisterDispatchActionType.RegistrationCompleted:
       return { ...state, registered: true, registering: false }
     case AuthRegisterDispatchActionType.ResetRegistration:
-      return { ...defaultState }
+      return { ...DEFAULT_STATE }
     case AuthRegisterDispatchActionType.Error:
       const { error } = action.payload
-      return { ...defaultState, error }
+      return { ...DEFAULT_STATE, error }
     default:
       throw new Error()
   }
@@ -65,19 +73,25 @@ const reducer = (state: AuthRegisterState, action: AuthRegisterDispatchAction) =
 const AuthRegisterContext = createContext<{
   state: AuthRegisterState
   dispatch: Dispatch<AuthRegisterDispatchAction>
+  config: AuthRegisterConfig
   provider: Web3AuthProvider
 }>({
-  state: defaultState,
+  state: DEFAULT_STATE,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   dispatch: (): void => {},
+  config: DEFAULT_CONFIG,
   provider: {} as Web3AuthProvider,
 })
 
-function AuthRegisterContextProvider({ children, provider }: AuthRegisterContextProviderProps) {
-  const [state, dispatch] = useReducer(reducer, defaultState)
+function AuthRegisterContextProvider({
+  children,
+  config = DEFAULT_CONFIG,
+  provider,
+}: AuthRegisterContextProviderProps) {
+  const [state, dispatch] = useReducer(reducer, DEFAULT_STATE)
 
   return (
-    <AuthRegisterContext.Provider value={{ state, dispatch, provider }}>
+    <AuthRegisterContext.Provider value={{ state, dispatch, config, provider }}>
       <>{children}</>
     </AuthRegisterContext.Provider>
   )

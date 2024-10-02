@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useWizard } from 'react-use-wizard'
 import { AuthRegisterCollectedData, WalletMethod } from '../../../../../common'
 import { useAuthRegister } from '../../../../hooks'
@@ -17,7 +17,8 @@ const _getNextStep = (walletMethod: WalletMethod): number => {
 }
 
 function WalletMethodStep() {
-  const { data, storeData } = useAuthRegister()
+  const { config, data, storeData } = useAuthRegister()
+  const { createWallet, connectWallet } = config
   const { experienceLevel, experienceChains } = data
   const { goToStep } = useWizard()
 
@@ -37,7 +38,14 @@ function WalletMethodStep() {
     goToStep(AuthRegisterStep.ExperienceChains)
   }
 
-  return <WalletMethodForm onPrevious={hasExperience ? handlePreviousStep : undefined} onSubmit={handleSubmit} />
+  return (
+    <WalletMethodForm
+      canCreateWallet={createWallet}
+      canConnectWallet={connectWallet}
+      onPrevious={hasExperience ? handlePreviousStep : undefined}
+      onSubmit={handleSubmit}
+    />
+  )
 }
 
 export default WalletMethodStep
