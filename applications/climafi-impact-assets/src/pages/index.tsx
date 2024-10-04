@@ -28,7 +28,6 @@ export default function Home() {
     <>
       <Head>
         <title>Climafi Impact Assets</title>
-        <meta name="description" content="A Cardano dApp powered by VakaJs" />
       </Head>
       <Layout>
         <Container>

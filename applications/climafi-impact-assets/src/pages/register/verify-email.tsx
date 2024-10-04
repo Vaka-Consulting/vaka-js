@@ -1,6 +1,8 @@
+import React from 'react'
 import { Layout } from '@/components'
 import { web3AuthProvider } from '@/providers/web3auth'
 import { AuthRegisterContextProvider, AuthRegisterOtpVerification } from '@vaka-tech/react'
+import Head from 'next/head'
 import { useSearchParams } from 'next/navigation'
 import Container from '@mui/material/Container'
 
@@ -11,12 +13,17 @@ export default function Register() {
   if (!otp) return <>Getting otp code...</>
 
   return (
-    <Layout>
-      <Container>
-        <AuthRegisterContextProvider provider={web3AuthProvider}>
-          <AuthRegisterOtpVerification otp={otp} />
-        </AuthRegisterContextProvider>
-      </Container>
-    </Layout>
+    <>
+      <Head>
+        <title>Verify Registration | Climafi Impact Assets</title>
+      </Head>
+      <Layout>
+        <Container>
+          <AuthRegisterContextProvider provider={web3AuthProvider}>
+            <AuthRegisterOtpVerification otp={otp} />
+          </AuthRegisterContextProvider>
+        </Container>
+      </Layout>
+    </>
   )
 }

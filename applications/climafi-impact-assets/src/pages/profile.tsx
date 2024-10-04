@@ -41,7 +41,7 @@ export default function Profile() {
   return (
     <>
       <Head>
-        <title>Profile | Web3 Auth on Cardano Demo</title>
+        <title>Profile | Climafi Impact Assets</title>
       </Head>
       <Layout>
         <Container>{authenticated ? <Authenticated /> : <NotAuthenticated />}</Container>
