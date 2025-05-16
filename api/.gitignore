@@ -1,0 +1,12 @@
+node_modules
+dist/
+.env
+.build/
+.serverless
+.env
+out
+
+# Only Shell Scripts inside /scripts
+scripts/*
+!scripts/*.sh
+

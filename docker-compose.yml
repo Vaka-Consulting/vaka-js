@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    env_file:
+      - ../api/sample.env
+    volumes:
+      - ../api:/usr/src/app
+    ports:
+      - "9001:9001"
+    command: npm run start:dev
+    depends_on:
+      - mongo
+
+  ui:
+    build:
+      context: ../ui
+      dockerfile: Dockerfile
+    volumes:
+      - ../ui:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: yarn dev
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - api
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
