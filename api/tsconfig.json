@@ -1,0 +1,23 @@
+{
+  // https://www.typescriptlang.org/tsconfig#compilerOptions
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["es2020"],
+    "module": "ESNext",
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": true,
+    "target": "es2022",
+    "types": ["node"],
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
+    // "typeRoots": ["node_modules/@types", "src/@types"],
+  },
+  "include": ["src/**/*"],
+  // "files": ["src/@types/graphql.d.ts"],
+  "exclude": ["node_modules"],
+  "ts-node":{"esm":true}
+}

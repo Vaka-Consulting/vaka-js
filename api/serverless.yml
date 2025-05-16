@@ -1,0 +1,102 @@
+service: onboarding-api
+
+
+custom:
+
+  domain:
+    dev: onboarding-api.dev.vakaconsulting.io
+    prod: onboarding-api.dev.vakaconsulting.io
+  
+  customDomain:
+    apiType: http
+    endpointType: REGIONAL
+    securityPolicy: tls_1_2
+    createRoute53Record: true
+    domainName: ${self:custom.domain.${opt:stage, 'dev'}}
+    certificateName: "*.dev.vakaconsulting.io"
+
+  sesTemplates:
+    addStage: true                             # Specifies whether to add stage to template name (default false)
+    configFile: './ses-email-templates/index.js' # Config file path (default './ses-email-templates/index.js')
+    # deployHook: 'before:deploy:deploy'          # Specifies serverless lifecycle event plugin use to deploy templates (default 'before:deploy:deploy')
+    # disableAutoDeploy: false                    # Specifies whether to sync templates while sls deploy and remove (default false)
+    removeMissed: true                        # Set this flag in order to remove templates those are not present in your configuration file. (not required, default false)
+
+  dev:
+    email_domain: dev.vakaconsulting.io
+    network: preprod
+    verification_url: https://main--66c0876a279301bd450e1225.chromatic.com/register/verify-code&verification_code=
+    
+  prod:
+    email_domain: vakaconsulting.io
+    network: mainnet
+    verification_url: https://main--66c0876a279301bd450e1225.chromatic.com/?path=/story/pages-authentication--confirm-email&verification_code=
+package:
+  patterns:
+    - '!node_modules/@aws-sdk'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  httpApi:
+    cors: true
+  environment:
+    STAGE: ${sls:stage}
+    DB_NAME: onboarding
+    EMAIL_DOMAIN: ${self:custom.${sls:stage}.email_domain}
+    DB_SERVER_NAME: ${ssm:/mongodb/onboarding/${sls:stage}/DB_SERVER_NAME}
+    JWT_PRIVATE_KEY: ${ssm:/onboarding/${sls:stage}/JWT_PRIVATE_KEY}
+    VERIFICATION_URL: ${self:custom.${sls:stage}.verification_url}
+    BLOCKFROST_API_KEY: ${ssm:/vaka/${sls:stage}/blockfrost-api-key}
+    BLOCKFROST_NETWORK: ${self:custom.${sls:stage}.network}
+    # You can use POLICY_ID as well if you user to be authenticated by Policy ID instead
+    POLICY_ASSET_ID: 171163f05e4f30b6be3c22668c37978e7d508b84f83558e523133cdf.174454d50 
+
+
+    
+  iam:
+    role:
+      path: /
+      statements:
+        # - Effect: Allow
+        #   Action:
+        #     - sqs:SendMessage
+        #     - sqs:DeleteMessage
+        #   Resource: 
+        #     - arn:aws:sqs:${aws:region}:${aws:accountId}:${self:service}-${sls:stage}-*
+        - Effect: Allow
+          Action:
+            - "ses:SendEmail"
+            - "ses:SendTemplatedEmail"
+            - "ses:TestRenderEmailTemplate"
+            - "ses:GetEmailTemplate"
+          Resource:   
+            - "arn:aws:ses:${aws:region}:${aws:accountId}:configuration-set/*"
+            - "arn:aws:ses:${aws:region}:${aws:accountId}:identity/${self:custom.${sls:stage}.email_domain}"
+            - "arn:aws:ses:${aws:region}:${aws:accountId}:identity/*@vaka.consulting"
+            - "arn:aws:ses:${aws:region}:${aws:accountId}:template/${self:service}-*_${sls:stage}"
+          
+functions:
+
+  graphql:
+    handler: src/lambda.graphqlHandler
+    timeout: 30
+    maximumRetryAttempts: 0
+    # onError: !ImportValue DevAlertTopic
+    events:
+      - httpApi:
+          path: /
+          method: POST
+      - httpApi:
+          path: /
+          method: GET
+          
+
+
+        
+# Omit the following lines if you aren't using TS!
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+  - '@haftahave/serverless-ses-template'
+  - serverless-domain-manager
