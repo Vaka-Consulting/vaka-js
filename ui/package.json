@@ -16,7 +16,7 @@
     "url": "https://github.com/Vaka-Consulting/vaka-js/issues"
   },
   "engines": {
-    "node": ">=18.17.x"
+    "node": ">=20.x.x"
   },
   "workspaces": [
     "applications/*",
@@ -37,7 +37,7 @@
     "deploy": "yarn chromatic",
     "chromatic": "npx chromatic --auto-accept-changes",
     "build-storybook": "storybook build",
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "yarn lint-staged",
     "lint": "eslint --fix",
     "clean": "npx rimraf --glob ./**/node_modules"
@@ -63,7 +63,7 @@
     "@vaka-tech/commitlint-config-base": "^1.0.0",
     "@vaka-tech/eslint-config-base": "^1.0.0",
     "@vaka-tech/prettier-config-base": "^1.0.0",
-    "husky": "^8.0.0",
+    "husky": "^9.1.7",
     "lerna": "^8.1.8",
     "lint-staged": "^13.0.1"
   }
