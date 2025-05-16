@@ -40,9 +40,20 @@ export interface AuthWithOtp {
   otp: string
 }
 
+export enum WalletSignAuthType{
+  POLICY_ID="POLICY_ID",
+  ASSSET_ID="POLICY_ASSET_ID",
+}
+
 export interface AuthWithWallet {
   stakeAddress: string
   walletSignature: WalletSignature
+}
+
+export interface AuthWithWalletPolicyId {
+  stakeAddress: string
+  walletSignature: WalletSignature
+  authType: WalletSignAuthType
 }
 
 export type AuthValues = AuthWithOtp & AuthWithWallet

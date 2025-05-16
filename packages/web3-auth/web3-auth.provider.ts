@@ -2,6 +2,7 @@ import { fetchWeb3Auth } from './api'
 import {
   createLoginWithOtpRequest,
   createLoginWithWalletRequest,
+  createLoginWithWalletPolicyIdRequest,
   createRequestLoginWithOtpRequest,
   createRefreshSessionRequest,
   createRegisterRequest,
@@ -73,6 +74,23 @@ class Web3AuthProvider implements model.Web3AuthProvider {
       this.transformErrors(response.errors)
 
       return response.data.loginWallet
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error as Error
+      }
+
+      throw new Error(`Error logging in: ${error}`)
+    }
+  }
+
+  public async loginWithWalletPolicyId(data: model.AuthWithWalletPolicyId) {
+    try {
+      const request = createLoginWithWalletPolicyIdRequest(this.apiEndpoint, data)
+      const response = await fetchWeb3Auth<model.ApiResponse<model.AuthSession>>(request).then((res) => res.data)
+
+      this.transformErrors(response.errors)
+
+      return response.data.loginWithWalletPolicyId
     } catch (error) {
       if (error instanceof Error) {
         throw error as Error

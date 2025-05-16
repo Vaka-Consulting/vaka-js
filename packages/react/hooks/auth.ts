@@ -5,6 +5,7 @@ import {
   AuthRequestWithOtp,
   AuthWithOtp,
   AuthWithWallet,
+  AuthWithWalletPolicyId,
 } from '@vaka-tech/common'
 import cookie from 'js-cookie'
 import {
@@ -21,6 +22,7 @@ interface Auth extends AuthState {
   requestOtp: (data: AuthRequestWithOtp) => Promise<void>
   loginWithEmail: (data: AuthWithOtp) => Promise<void>
   loginWithWallet: (data: AuthWithWallet) => Promise<void>
+  loginWithWalletPolicyId: (data: AuthWithWalletPolicyId) => Promise<void>
   refreshSession: () => Promise<void>
   logout: () => Promise<void>
 }
@@ -97,6 +99,17 @@ function useAuth(): Auth {
     }
   }
 
+  const loginWithWalletPolicyId = async (data: AuthWithWalletPolicyId) => {
+    try {
+      const { stakeAddress, walletSignature, authType } = data
+      const { accessToken } = await provider.loginWithWalletPolicyId({ stakeAddress, walletSignature, authType })
+
+      _handleLogin(accessToken)
+    } catch (error) {
+      _handleError(`Error logging in with wallet policyId: ${error || ''}`)
+    }
+  }
+
   const refreshSession = useCallback(async () => {
     try {
       if (!state.accessToken) throw new Error('No session ID found')
@@ -124,6 +137,7 @@ function useAuth(): Auth {
     requestOtp,
     loginWithEmail,
     loginWithWallet,
+    loginWithWalletPolicyId,
     logout,
     refreshSession,
   }

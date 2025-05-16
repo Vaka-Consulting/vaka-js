@@ -1,4 +1,5 @@
 export * from './createLoginWithWalletRequest'
+export * from './createLoginWithWalletPolicyIdRequest'
 export * from './createLoginWithOtpRequest'
 export * from './createRequestLoginWithOtpRequest'
 export * from './createRegisterRequest'

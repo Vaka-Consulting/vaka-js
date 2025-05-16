@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { AuthWithWallet } from '@vaka-tech/common'
+import { AuthWithWallet, AuthWithWalletPolicyId } from '@vaka-tech/common'
 import { useWallet } from '@meshsdk/react'
 import { Alert, Box, Typography } from '@mui/material'
 import { useAuth } from '../../../hooks'
@@ -8,13 +8,17 @@ import { WalletConnector } from '../../Wallet'
 
 function AuthLoginWithWallet() {
   const { connected } = useWallet()
-  const { authenticated, loginWithWallet, error } = useAuth()
+  const { authenticated, loginWithWallet, loginWithWalletPolicyId, error } = useAuth()
 
   const handleSubmit = useCallback(
-    async (data: AuthWithWallet) => {
-      await loginWithWallet(data)
+    async (data: AuthWithWallet | AuthWithWalletPolicyId) => {
+      if ('authType' in data) {
+        await loginWithWalletPolicyId(data)
+      } else {
+        await loginWithWallet(data)
+      }
     },
-    [loginWithWallet],
+    [loginWithWallet, loginWithWalletPolicyId],
   )
 
   return (
