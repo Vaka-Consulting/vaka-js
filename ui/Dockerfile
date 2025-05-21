@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:22
 
 COPY applications/web3-app/package.json /app/applications/web3-app/package.json
 COPY packages /app/packages
@@ -11,4 +11,8 @@ cd /app/applications/web3-app && \
 yarn install
 
 
+WORKDIR /app/applications/web3-app
 
+ENTRYPOINT ["/usr/bin/bash", "-c"]
+
+CMD [ "yarn install && yarn dev" ]
