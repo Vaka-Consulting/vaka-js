@@ -1,40 +1,46 @@
 version: "3.8"
 
 services:
-  api:
-    build:
-      context: ../api
-      dockerfile: Dockerfile
-    env_file:
-      - ../api/sample.env
-    volumes:
-      - ../api:/usr/src/app
-    ports:
-      - "9001:9001"
-    command: npm run start:dev
-    depends_on:
-      - mongo
+  # api:
+  #   build:
+  #     context: ../api
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - ../api/sample.env
+  #   volumes:
+  #     - ../api:/usr/src/app
+  #   ports:
+  #     - "9001:9001"
+  #   command: npm run start:dev
+  #   depends_on:
+  #     - mongo
 
   ui:
     build:
-      context: ../ui
+      context: ui
       dockerfile: Dockerfile
     volumes:
-      - ../ui:/usr/src/app
+      - ./ui/applications/web3-app/src:/app/applications/web3-app/src:ro
+      - ./ui/applications/web3-app/next.config.mjs:/app/applications/web3-app/next.config.mjs:ro
+      - ./ui/applications/web3-app/tsconfig.json:/app/applications/web3-app/tsconfig.json:ro
+      - ./ui/applications/web3-app/package.json:/app/applications/web3-app/package.json:ro
+    # user: "1000:1000"
     ports:
-      - "3000:3000"
-    command: yarn dev
+      - "3001:3000"
+    entrypoint: /bin/bash 
+    command: "-c 'cd applications/web3-app && yarn install && yarn dev'"
+    # command: -c 'sleep 10000'
     environment:
       - NODE_ENV=development
-    depends_on:
-      - api
+    # depends_on:
+    #   - api
 
-  mongo:
-    image: mongo:6
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
+  # mongo:
+  #   image: mongo:6
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo_data:/data/db
 
-volumes:
-  mongo_data:
+# volumes:
+#   mongo_data:
