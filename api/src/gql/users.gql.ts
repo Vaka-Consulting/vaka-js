@@ -3,6 +3,31 @@
  */
 
 import gql from "graphql-tag";
+import { LOGIN_METHODS } from "../configs/loginConfig.js";
+import { User } from "../entities/users.js";
+
+const queries = [
+  "user: User!",
+  LOGIN_METHODS.REFRESH_SESSION && "refresh_session: Session!",
+  LOGIN_METHODS.REGISTER && "request_code(email: String!): GenericStatus!",
+  LOGIN_METHODS.WALLET &&
+    "login_wallet(stake_address: String!, signature: String!, key: String!): Session",
+  LOGIN_METHODS.USER &&
+    "login_user(stake_address: String!, signature: String!, key: String!): Session",
+  LOGIN_METHODS.POLICY_ID &&
+    "login_with_policy_id(stake_address: String!, signature: String!, key: String!, match_type: AssetMatchType!): Session!",
+]
+  .filter(Boolean)
+  .join("\n");
+
+const mutations = [
+  LOGIN_METHODS.REGISTER &&
+    "register(email: String, survey_items: String, stake_address: String, signature: String, key: String): GenericStatus!",
+  LOGIN_METHODS.REGISTER && "verify_code(code: String!): Session!",
+  LOGIN_METHODS.USER && "verify_otp(email: String!, otp: String!): Session!",
+]
+  .filter(Boolean)
+  .join("\n");
 
 export const userDefs = gql`
   input SurveyItems {
@@ -32,46 +57,15 @@ export const userDefs = gql`
     survey_items: JSON
   }
 
-  type Query {
-    refresh_session: Session!
+  ${queries
+    ? `type Query {
+    ${queries}
+  }`
+    : ""}
 
-    request_code(email: String!): GenericStatus!
-
-    # Login with wallet
-    login_wallet(
-      stake_address: String!
-      signature: String!
-      key: String!
-    ): Session
-
-    login_user(
-      stake_address: String!
-      signature: String!
-      key: String!
-    ): Session
-
-    # Login with policy id
-    login_with_policy_id(
-      stake_address: String!
-      signature: String!
-      key: String!
-      match_type: AssetMatchType!
-    ): Session!
-
-    # Only get user info
-    user: User!
-  }
-
-  type Mutation {
-    # submit_survey(email: String!): String!
-    register(
-      email: String
-      survey_items: String
-      stake_address: String
-      signature: String
-      key: String
-    ): GenericStatus!
-    verify_code(code: String!): Session!
-    verify_otp(email: String!, otp: String!): Session!
-  }
+  ${mutations
+    ? `type Mutation {
+    ${mutations}
+  }`
+    : ""}
 `;

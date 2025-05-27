@@ -23,6 +23,7 @@ import {
   getAssetMatchType,
   getUserSession,
 } from "../utils/users.js";
+import { LOGIN_METHODS } from "../configs/loginConfig.js";
 
 const emailService = new EmailService();
 const tokenSevrice = new TokenService();
@@ -322,11 +323,15 @@ export const refresh_session = async (
 };
 
 export const queries = {
-  request_code,
+  ...(LOGIN_METHODS.REFRESH_SESSION ? { refresh_session } : {}),
+  ...(LOGIN_METHODS.REGISTER ? { request_code } : {}),
   user,
-  refresh_session,
-  login_wallet,
-  login_user,
-  login_with_policy_id,
+  ...(LOGIN_METHODS.WALLET ? { login_wallet } : {}),
+  ...(LOGIN_METHODS.USER ? { login_user } : {}),
+  ...(LOGIN_METHODS.POLICY_ID ? { login_with_policy_id } : {}),
 };
-export const mutations = { register, verify_code, verify_otp };
+export const mutations = {
+  ...(LOGIN_METHODS.USER ? { verify_otp } : {}),
+  ...(LOGIN_METHODS.REGISTER ? { register } : {}),
+  ...(LOGIN_METHODS.REGISTER ? { verify_code } : {}),
+};

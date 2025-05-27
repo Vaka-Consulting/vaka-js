@@ -2,8 +2,8 @@ import { ApolloServer } from "@apollo/server";
 import * as dotenv from "dotenv";
 import { GraphQLObjectId } from "graphql-objectid-scalar";
 import {
-  queries as UserQueries,
-  mutations as UserMutations,
+  queries as userQueries,
+  mutations as userMutations,
 } from "./resolvers/users.js";
 import GraphQLJSON, { GraphQLJSONObject } from "graphql-type-json";
 
@@ -17,15 +17,14 @@ export interface ContextType {
   user: User;
 }
 
+console.log("User Queries = ", userQueries);
+console.log("User Mutations = ", userMutations);
+
 dotenv.config({ override: true });
 
 const resolvers = {
-  Query: {
-    ...UserQueries,
-  },
-  Mutation: {
-    ...UserMutations,
-  },
+  ...(Object.keys(userQueries).length > 0 && { Query: userQueries }),
+  ...(Object.keys(userMutations).length > 0 && { Mutation: userMutations }),
   GraphQLObjectId: GraphQLObjectId,
   JSON: GraphQLJSON,
   JSONObject: GraphQLJSONObject,
