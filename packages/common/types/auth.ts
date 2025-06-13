@@ -85,4 +85,10 @@ export interface AuthResendVerificationLinkData {
   email: string
 }
 
+export interface AuthUser {
+  email?: string
+  stakeAddress?: string
+  accessToken?: string
+}
+
 export type AuthRegisterCollectedData = UserAuthRegisterUserData & Omit<AuthRegisterData, 'data'>

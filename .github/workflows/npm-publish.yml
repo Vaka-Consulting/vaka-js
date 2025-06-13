@@ -4,25 +4,25 @@ on:
   release:
     types: [published]
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 22.x]
+        node-version: [22.x]
 
     steps:
       - uses: actions/checkout@v4
-      
+
       # - name: Use Node.js ${{ matrix.node-version }}
       #   uses: actions/setup-node@v4
       #   with:
       #     node-version: ${{ matrix.node-version }}
-      
+
       # - name: Run install
       #   uses: borales/actions-yarn@v4
       #   with:
@@ -37,29 +37,29 @@ jobs:
       #   run: |
       #     yarn --version
       #     yarn build
-  
+
   publish-github-packages:
     needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 22.x]
+        node-version: [22.x]
 
     permissions:
       packages: write
     steps:
       - uses: actions/checkout@v4
       - name: Set env
-        run: echo "RELEASE_VERSION=0.0.16" >> $GITHUB_ENV
+        run: echo "RELEASE_VERSION=0.0.17" >> $GITHUB_ENV
       - name: Set version
         run: ./scripts/version_update.sh ${{ env.RELEASE_VERSION }}
       - uses: actions/setup-node@v4
         with:
-          # cache: false 
+          # cache: false
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
           scope: '@vakaconsulting'
-      
+
       # - name: Dump secret
       #   run: echo -n "${{ secrets.NODE_AUTH_TOKEN }}" | xxd -ps
       # - run: npm i
@@ -71,7 +71,7 @@ jobs:
       - run: yarn workspace @vakaconsulting/config run build
       - run: yarn workspace @vakaconsulting/common run build
       - run: yarn workspace @vakaconsulting/web3-auth run build
-      
+
       # - run: yarn workspace @vakaconsulting/react run build
 
       # - run: |
@@ -80,25 +80,25 @@ jobs:
       #         npm pack && \
       #         ls -al && \
       #         tar -tf vakaconsulting-react-${{ env.RELEASE_VERSION }}.tgz
-      
+
       # - run: cat .npmrc
 
       - name: Configure .npmrc
         run: |
-            echo "@vakaconsulting:registry=https://registry.npmjs.org" > ~/.npmrc
-            echo "//registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" >> ~/.npmrc
+          echo "@vakaconsulting:registry=https://registry.npmjs.org" > ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" >> ~/.npmrc
 
       - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
-      
+
       - run: |
-              cd packages/web3-auth && \
-              # sed -i 's/"version":.*/"version":"${{ env.RELEASE_VERSION }}",/g' package.json && \
-              # sed -i 's/@vakaconsulting/@vaka-dummy/g' package.json && \
-              cat package.json && \
-              npm publish --access public
+          cd packages/web3-auth && \
+          # sed -i 's/"version":.*/"version":"${{ env.RELEASE_VERSION }}",/g' package.json && \
+          # sed -i 's/@vakaconsulting/@vaka-dummy/g' package.json && \
+          cat package.json && \
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-      
+
       # - run: |
       #         cd packages/react && \
       #         # sed -i 's/@vakaconsulting/@vaka-dummy/g' package.json && \
@@ -108,23 +108,22 @@ jobs:
       #         npm publish --access public
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-      
-      
+
       - run: |
-              cd packages/common && \
-              # sed -i 's/@vakaconsulting/@vaka-dummy/g' package.json && \
-              # sed -i 's/"version":.*/"version":"${{ env.RELEASE_VERSION }}",/g' package.json && \
-              cat package.json && \
-              npm publish --access public
+          cd packages/common && \
+          # sed -i 's/@vakaconsulting/@vaka-dummy/g' package.json && \
+          # sed -i 's/"version":.*/"version":"${{ env.RELEASE_VERSION }}",/g' package.json && \
+          cat package.json && \
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-      
+
       - run: |
-              cd packages/config && \
-              # sed -i 's/@vakaconsulting/@vakaconsulting/g' package.json && \
-              # sed -i 's/"version":.*/"version":"${{ env.RELEASE_VERSION }}",/g' package.json && \
-              cat package.json && \
-              npm publish --access public
+          cd packages/config && \
+          # sed -i 's/@vakaconsulting/@vakaconsulting/g' package.json && \
+          # sed -i 's/"version":.*/"version":"${{ env.RELEASE_VERSION }}",/g' package.json && \
+          cat package.json && \
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
 
@@ -143,7 +142,7 @@ jobs:
   #     - run: sed -i 's/"version":.*/"version":"${{ github.event.release.tag_name }}",/g' package.json
   #     - run: cat package.json
   #     - run: npm run build
-  #     - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"     
+  #     - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
   #     - run: npm publish --access public
   #       env:
   #         NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}

@@ -9,6 +9,7 @@ import {
   AuthWithWalletPolicyId,
   AuthVerifyCodeData,
   AuthResendVerificationLinkData,
+  AuthUser,
 } from '@vakaconsulting/common'
 
 interface ApiResponse<TResponse> {
@@ -41,5 +42,6 @@ export type {
   AuthRegisterData,
   AuthVerifyCodeData,
   AuthResendVerificationLinkData,
+  AuthUser,
 }
 export { ApiResponseStatus }

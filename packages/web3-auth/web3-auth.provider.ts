@@ -8,6 +8,7 @@ import {
   createRegisterRequest,
   createVerifyCodeRequest,
   createResendVerificationLinkRequest,
+  createGetUserRequest,
 } from './api/requests'
 import * as model from './web3-auth.model'
 
@@ -178,6 +179,23 @@ class Web3AuthProvider implements model.Web3AuthProvider {
       }
 
       throw new Error(`Error logging out: ${error}`)
+    }
+  }
+
+  public async getUser(accessToken: string) {
+    try {
+      const request = createGetUserRequest(this.apiEndpoint, accessToken)
+      const response = await fetchWeb3Auth<model.ApiResponse<model.AuthUser>>(request).then((res) => res.data)
+
+      this.transformErrors(response.errors)
+
+      return response.data.user
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error as Error
+      }
+
+      throw new Error(`Error getting user: ${error}`)
     }
   }
 }

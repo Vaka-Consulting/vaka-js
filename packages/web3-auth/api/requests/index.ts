@@ -6,3 +6,5 @@ export * from './createRegisterRequest'
 export * from './createRefreshSessionRequest'
 export * from './createVerifyCodeRequest'
 export * from './createResendVerificationLinkRequest'
+export * from './createGetUserRequest'
+
